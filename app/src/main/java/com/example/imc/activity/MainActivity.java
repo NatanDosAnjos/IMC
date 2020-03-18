@@ -1,15 +1,24 @@
 package com.example.imc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE;
+import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 import static com.example.imc.R.id.editTextNome;
+import static com.example.imc.R.id.history;
 import static com.example.imc.R.id.textInputAltura;
 import static com.example.imc.R.id.textInputPeso;
 import static com.example.imc.R.id.textoImc;
@@ -21,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textoResultado;
     private TextView imc;
     private Vibrator vibrator;
-    private EditText tempo;
 
 
     @Override
@@ -35,6 +43,57 @@ public class MainActivity extends AppCompatActivity {
         textoResultado     = findViewById(R.id.textViewResultado);
         imc                = findViewById(textoImc);
         vibrator           = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+
+        //setando a elevação do appBar
+        getSupportActionBar().setElevation(0);
+
+        //muda para modo noturno (todos testos ficarão com a cor quase branco);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
+    /*@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        hideNavigationBar();
+    }*/
+
+    public void hideNavigationBar() {
+        View decorView = getWindow().getDecorView();
+
+        // Esconde tanto a barra de navegação e a barra de status .
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        try {
+            getMenuInflater().inflate(R.menu.menu, menu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case history:
+
+                /*Intent intent = new Intent();
+                startActivity(intent);*/
+
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     //Gera número aleatório e os atribui
